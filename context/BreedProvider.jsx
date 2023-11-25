@@ -48,15 +48,8 @@ const BreedProvider = ({children}) =>{
 
     useEffect(()=>{
         getGlobalBreeds()
+        console.log("GET GLOBAL 1")
     },[getGlobalBreeds])
-
-    useEffect(()=>{
-        getGlobalBreeds()
-    },[breedSelected,getGlobalBreeds])
-
-    useEffect(()=>{
-        getCatsFavs()
-    },[])
 
     const handleBreedSelected = valor =>{
         setBreedSelected(valor)
@@ -71,6 +64,7 @@ const BreedProvider = ({children}) =>{
     }
 
     const handleNextGlobalBreeds = async () => {
+        
         const {data} = await axios(`https://api.thecatapi.com/v1/images/search?has_breeds=1&limit=10&breed_ids=${breedSelected}&api_key=live_lqJRQZIbWnK0OyN6kiBad4pzmPMxJB5JK9gx6OQXlChpOHANqazbwIXBwZU8t7tl`)
        
         const breeds = [...globalBreeds, ...data]
@@ -129,7 +123,8 @@ const BreedProvider = ({children}) =>{
             showFavs,
             handleShowFavs,
             getCatsFavs,
-            handleDeleteCat
+            handleDeleteCat,
+            
         }}>
         {children}
         </BreedContext.Provider>
