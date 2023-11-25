@@ -3,14 +3,19 @@ import FeaturedContent from '../components/FeaturedContent'
 import GlobalContent from '../components/GlobalContent'
 import DetailsPage from '../components/DetailsPage'
 import useBreed from '../hooks/useBreed'
+import FavsPage from '@/components/FavsPage'
 
 const Layout = () => {
-    const {breedClicked} = useBreed()
+    const {breedClicked, showFavs} = useBreed()
   return (
     <>
         <Header/>
-        <FeaturedContent/>
-        <GlobalContent/>
+        {showFavs?<FavsPage/> :(
+          <>
+            <FeaturedContent/>
+            <GlobalContent/>
+          </>
+        )}
         { breedClicked.id
             ? (<DetailsPage breed={breedClicked}/>)
             : ''

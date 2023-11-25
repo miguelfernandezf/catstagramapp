@@ -11,6 +11,8 @@ const BreedProvider = ({children}) =>{
     const [globalBreeds, setGlobalBreeds] = useState([])
     const [showModal, setShowModal] = useState(false)
     const [breedClicked, setBreedClicked] = useState({})
+    const [cats, setCats] = useState([])
+    const [showFavs, setShowFavs] = useState(false)
 
 
     const getBreeds = async () => {
@@ -31,6 +33,11 @@ const BreedProvider = ({children}) =>{
        setGlobalBreeds(data)
     },[breedSelected])
 
+    const getCatsFavs = async () =>{
+        const {data} = await axios('/api/cats')
+        setCats(data)
+    }
+
     useEffect(()=>{
         getBreeds()
     },[])
@@ -47,6 +54,10 @@ const BreedProvider = ({children}) =>{
         getGlobalBreeds()
     },[breedSelected,getGlobalBreeds])
 
+    useEffect(()=>{
+        getCatsFavs()
+    },[])
+
     const handleBreedSelected = valor =>{
         setBreedSelected(valor)
     }
@@ -62,10 +73,9 @@ const BreedProvider = ({children}) =>{
 
     const handleNextGlobalBreeds = async () => {
         const {data} = await axios(`https://api.thecatapi.com/v1/images/search?has_breeds=1&limit=10&breed_ids=${breedSelected}&api_key=live_lqJRQZIbWnK0OyN6kiBad4pzmPMxJB5JK9gx6OQXlChpOHANqazbwIXBwZU8t7tl`)
-        // console.log(data)
+       
         const breeds = [...globalBreeds, ...data]
         setGlobalBreeds(breeds)
-        console.log(globalBreeds)
     }
 
     const handleSaveCat = async (e) =>{
@@ -82,6 +92,10 @@ const BreedProvider = ({children}) =>{
         }
     }
 
+    const handleShowFavs = () =>{
+        setShowFavs(!showFavs)
+    }
+
     return(
         <BreedContext.Provider value={{
             breeds,
@@ -94,7 +108,11 @@ const BreedProvider = ({children}) =>{
             breedClicked,
             handleBreedClicked,
             handleNextGlobalBreeds,
-            handleSaveCat
+            handleSaveCat,
+            cats,
+            showFavs,
+            handleShowFavs,
+            getCatsFavs
         }}>
         {children}
         </BreedContext.Provider>

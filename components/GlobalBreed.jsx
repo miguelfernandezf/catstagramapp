@@ -4,7 +4,7 @@ import useBreed from "../hooks/useBreed"
 const GlobalBreed = ({breed}) => {
     const { handleModalClick, handleBreedClicked } = useBreed()
   return (
-    <div className="flex border h-80 m-5 justify-center" >
+    <div className="flex border h-80 m-2 md:m-5 justify-center" >
         <img
             src={breed.url}
             alt={breed.id}

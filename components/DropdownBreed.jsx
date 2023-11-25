@@ -4,7 +4,7 @@ import useBreed from "../hooks/useBreed"
 const DropdownBreed = () => {
     const {breeds, breedSelected, handleBreedSelected} = useBreed()
     return (
-        <div className="flex rounded-md bg-white mt-2 justify-end">
+        <div className="flex rounded-md bg-white mt-2 mr-5 mb-2 justify-end">
             <Dropdown 
                 className="w-full bg-white p-3 gap-20 rounded-md" 
                 placeholder="Select a Breed" 
