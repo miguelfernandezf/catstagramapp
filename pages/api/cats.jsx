@@ -7,6 +7,15 @@ export default async function handler(req, res){
 
     res.status(200).json(cats)
 
+    if(req.method === 'DELETE'){
+        const cat = await prisma.cat.delete({
+            where:{
+                id: parseInt(req.body.id)
+            }
+        })
+        res.status(200).json(cat)
+    }
+
     if(req.method === 'POST'){
         const cat = await prisma.cat.create({
             data:{
@@ -17,4 +26,6 @@ export default async function handler(req, res){
         
         res.status(200).json(cat)
     }
+
+    
 }

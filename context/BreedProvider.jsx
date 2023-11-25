@@ -67,7 +67,6 @@ const BreedProvider = ({children}) =>{
     }
 
     const handleBreedClicked = (breed) =>{
-        console.log(breed)
         setBreedClicked(breed)
     }
 
@@ -93,7 +92,24 @@ const BreedProvider = ({children}) =>{
     }
 
     const handleShowFavs = () =>{
+        getCatsFavs()
         setShowFavs(!showFavs)
+    }
+
+    const handleDeleteCat = async id =>{
+        try {
+            const data = await axios.delete('/api/cats',{
+                data:{
+                    id
+                }
+            })
+            console.log(data)
+            setBreedClicked({})
+            getCatsFavs()
+        } catch (error) {
+            console.log(error)
+        }
+        
     }
 
     return(
@@ -112,7 +128,8 @@ const BreedProvider = ({children}) =>{
             cats,
             showFavs,
             handleShowFavs,
-            getCatsFavs
+            getCatsFavs,
+            handleDeleteCat
         }}>
         {children}
         </BreedContext.Provider>

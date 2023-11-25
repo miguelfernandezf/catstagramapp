@@ -5,7 +5,7 @@ import { Image } from "primereact/image"
 import { Button } from "primereact/button"
 
 const DetailsPage = ({breed}) => {
-    const {showModal, handleModalClick, handleSaveCat} = useBreed()
+    const {showModal, handleModalClick, handleSaveCat, showFavs, handleDeleteCat} = useBreed()
 
     const {name, description} = breed.breeds[0]
     
@@ -28,15 +28,22 @@ const DetailsPage = ({breed}) => {
         >
             <Button 
                 type="submit"
-                label="Save" 
+                label="Save"
+                visible={!showFavs}
                 className="bg-indigo-600 hover:bg-indigo-800 
                     text-white px-10 py-3 m-5 font-bold rounded"
                 
             />
-            <Button label="Cancel"
+            <Button label={showFavs ? 'Delete' : 'Cancel'}
+                type="button"
                 className="bg-red-700 hover:bg-red-900 
                     text-white font-bold rounded px-10 py-3 m-5"
-                onClick={()=>handleModalClick()}
+                onClick={()=>{
+                    if(showFavs){
+                        handleDeleteCat(breed.id)
+                    }
+                    handleModalClick()
+                }}
             />
         </form>
     );
@@ -44,7 +51,7 @@ const DetailsPage = ({breed}) => {
   return (
     <Dialog 
         className="w-90 md:w-1/3 h-auto m-3 
-            overflow-hidden bg-slate-50 rounded-md"
+            overflow-hidden bg-slate-50 rounded-md border shadow-md"
         visible={showModal} 
         onHide={()=>handleModalClick()}
     >
